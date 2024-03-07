@@ -1,7 +1,9 @@
 ﻿namespace Mde.PlatformIntegration.Domain.Services
 {
-    public interface ILocalAuthentication
+    public interface INativeAuthentication
     {
+        bool IsSupported();
+
         Task<AuthenticationResult> PromptLoginAsync();
     }
 

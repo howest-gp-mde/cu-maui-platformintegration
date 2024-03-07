@@ -30,7 +30,7 @@ namespace Mde.PlatformIntegration
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddSingleton<ILocalAuthentication, Platforms.Services.LocalAuthentication>();
+            builder.Services.AddSingleton<INativeAuthentication, Platforms.Services.LocalAuthentication>();
 
             Routing.RegisterRoute("login", typeof(LoginPage));
 

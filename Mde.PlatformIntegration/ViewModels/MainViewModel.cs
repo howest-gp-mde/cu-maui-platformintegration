@@ -7,9 +7,9 @@ namespace Mde.PlatformIntegration.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
-        private readonly ILocalAuthentication localAuthentication;
+        private readonly INativeAuthentication localAuthentication;
 
-        public MainViewModel(ILocalAuthentication localAuthentication)
+        public MainViewModel(INativeAuthentication localAuthentication)
         {
             this.localAuthentication = localAuthentication;
         }

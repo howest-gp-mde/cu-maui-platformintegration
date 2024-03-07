@@ -14,8 +14,13 @@ using Java.Lang;
 
 namespace Mde.PlatformIntegration.Platforms.Services
 {
-    public class LocalAuthentication : ILocalAuthentication
+    public class LocalAuthentication : INativeAuthentication
     {
+        public bool IsSupported()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<AuthenticationResult> PromptLoginAsync()
         {
             var taskCancellationSource = new CancellationTokenSource();
