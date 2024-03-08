@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mde.PlatformIntegration.Platforms.Services
 {
-    public class LocalAuthentication : INativeAuthentication
+    public class NativeAuthentication : INativeAuthentication
     {
         public bool IsSupported()
         {

@@ -11,14 +11,34 @@ using Java.Util.Concurrent;
 using Android.App;
 using System.Threading;
 using Java.Lang;
+using Android.OS;
+using Android;
+using Android.Content.PM;
 
 namespace Mde.PlatformIntegration.Platforms.Services
 {
-    public class LocalAuthentication : INativeAuthentication
+    public class NativeAuthentication : INativeAuthentication
     {
+        private readonly BiometricManager manager;
+
+        public NativeAuthentication()
+        {
+            manager = BiometricManager.From(Application.Context);
+        }
+
         public bool IsSupported()
         {
-            throw new NotImplementedException();
+            if (Build.VERSION.SdkInt < BuildVersionCodes.M)
+                return false;
+
+            var context = Application.Context;
+
+            if (context.CheckCallingOrSelfPermission(Manifest.Permission.UseBiometric) != Permission.Granted &&
+                context.CheckCallingOrSelfPermission(Manifest.Permission.UseFingerprint) != Permission.Granted)
+                return false;
+
+            int result = manager.CanAuthenticate(BiometricManager.Authenticators.DeviceCredential | BiometricManager.Authenticators.BiometricWeak);
+            return result == 0;
         }
 
         public async Task<AuthenticationResult> PromptLoginAsync()
@@ -44,11 +64,13 @@ namespace Mde.PlatformIntegration.Platforms.Services
             var activity = (FragmentActivity) Platform.CurrentActivity;
             using var dialog = new BiometricPrompt(activity, executor, handler);
 
+            //dialog.Authenticate(info);
+
             await using (var taskCancellation = taskCancellationSource.Token.Register(dialog.CancelAuthentication))
             {
                 dialog.Authenticate(info);
             }
-            
+
             return await taskCompletionSource.Task;
         }
 
@@ -64,50 +86,36 @@ namespace Mde.PlatformIntegration.Platforms.Services
             public override void OnAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result)
             {
                 base.OnAuthenticationSucceeded(result);
-
-                taskCompletionSource.SetResult(new AuthenticationResult
-                {
-                    Authenticated = true,
-                    ErrorMessage = null
-                });
+                SetResult(true, null);
             }
 
             public override void OnAuthenticationError(int errorCode, ICharSequence errorMessage)
             {
                 base.OnAuthenticationError(errorCode, errorMessage);
-
-                taskCompletionSource.SetResult(new AuthenticationResult
-                {
-                    Authenticated = false,
-                    ErrorMessage = errorMessage.ToString()
-                });
+                SetResult(false, errorMessage.ToString());
             }
 
             public override void OnAuthenticationFailed()
             {
                 base.OnAuthenticationFailed();
-
-                taskCompletionSource.SetResult(new AuthenticationResult
-                {
-                    Authenticated = false,
-                    ErrorMessage = "Authentication failed. Please try again."
-                });
+                SetResult(false, "Authentication failed. Please try again.");
             }
             public void OnClick(IDialogInterface dialog, int which)
             {
-                taskCompletionSource.SetResult(new AuthenticationResult
+                SetResult(false, "Authentication cancelled");
+            }
+
+            private void SetResult(bool success, string errorMessage)
+            {
+                if (!(taskCompletionSource.Task.IsCanceled || taskCompletionSource.Task.IsCompleted || taskCompletionSource.Task.IsFaulted))
                 {
-                    Authenticated = false,
-                    ErrorMessage = "Authentication cancelled"
-                });
+                    taskCompletionSource.SetResult(new AuthenticationResult
+                    {
+                        Authenticated = success,
+                        ErrorMessage = errorMessage
+                    });
+                }
             }
         }
-        //private void SetResultSafe(FingerprintAuthenticationResult result)
-        //{
-        //    if (!(_taskCompletionSource.Task.IsCanceled || _taskCompletionSource.Task.IsCompleted || _taskCompletionSource.Task.IsFaulted))
-        //    {
-        //        _taskCompletionSource.SetResult(result);
-        //    }
-        //}
     }
 }

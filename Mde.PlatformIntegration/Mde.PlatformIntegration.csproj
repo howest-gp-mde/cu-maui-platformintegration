@@ -79,7 +79,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Platforms\iOS\Services\LocalAuthentication.iOS.cs">
+	  <Compile Update="Platforms\iOS\Services\NativeAuthentication.iOS.cs">
 	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
 	  </Compile>
 	</ItemGroup>

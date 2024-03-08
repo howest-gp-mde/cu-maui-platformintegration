@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Mde.PlatformIntegration.Domain.Services;
 using Mde.PlatformIntegration.Pages;
+using Mde.PlatformIntegration.Platforms.Services;
 using Mde.PlatformIntegration.ViewModels;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
@@ -30,7 +31,8 @@ namespace Mde.PlatformIntegration
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddSingleton<INativeAuthentication, Platforms.Services.LocalAuthentication>();
+
+            builder.Services.AddSingleton<INativeAuthentication, NativeAuthentication>();
 
             Routing.RegisterRoute("login", typeof(LoginPage));
 
