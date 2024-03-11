@@ -34,8 +34,12 @@ namespace Mde.PlatformIntegration.ViewModels
             {
                 Debug.WriteLine("Local authentication is not supported on this platform");
             }
-        }); 
+        });
 
+        public ICommand GoToAudioPlayerCommand => new Command(async () =>
+        {
+            await Shell.Current.GoToAsync("audioplayer", true);
+        });
     }
 
 }

@@ -12,6 +12,13 @@
         <Setter Property="HeightRequest" Value="100" />
     </Style>
 
+    <Style TargetType="material:ButtonView" Class="MusicButton">
+        <Setter Property="WidthRequest" Value="105" />
+        <Setter Property="HeightRequest" Value="130" />
+        <Setter Property="Margin" Value="5,10" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+    </Style>
+
     <Style x:Key="NormalText" TargetType="Label" Class="Text">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource Surface}}" />
     </Style>

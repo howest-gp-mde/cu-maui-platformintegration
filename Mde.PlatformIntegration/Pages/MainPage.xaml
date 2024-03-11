@@ -5,6 +5,7 @@
              xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Class="Mde.PlatformIntegration.Pages.MainPage" 
+             x:DataType="viewmodels:MainViewModel"
              Title="Platform integration Demo">
     <VerticalStackLayout>
         <VerticalStackLayout 
@@ -27,7 +28,7 @@
                 </Grid>
             </material:ButtonView>
 
-            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding LoginCommand}">
+            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding GoToAudioPlayerCommand}">
                 <Grid ColumnDefinitions="60, *, 60">
                     <Label Grid.Column="0" Text="{x:Static fa:Solid.Music}" StyleClass="Icon" HorizontalOptions="Start" />
                     <Label Grid.Column="1" Text="Play audio" VerticalOptions="Center" FontSize="20" StyleClass="Text" />
