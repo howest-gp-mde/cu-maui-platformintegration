@@ -34,7 +34,7 @@ namespace Mde.PlatformIntegration.Domain.Services
                 },
                 new GameTrack
                 {
-                    Title = "The Secret of Monkey Island",
+                    Title = "Secret of Monkey Island",
                     AudioPath = "thesecretofmonkeyisland.mp3",
                     ImagePath = "thesecretofmonkeyisland.png",
                 },

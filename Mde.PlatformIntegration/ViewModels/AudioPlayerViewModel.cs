@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Mde.PlatformIntegration.Domain.Models;
 using Mde.PlatformIntegration.Domain.Services;
 using Plugin.Maui.Audio;
@@ -12,18 +13,24 @@ namespace Mde.PlatformIntegration.ViewModels
         private readonly IAudioManager audioManager;
         private readonly IDispatcherTimer timer;
         private readonly IMusicService musicService;
+        private readonly IMessenger messenger;
         private AsyncAudioPlayer audioPlayer;
         private CancellationTokenSource cancellationTokenSource = new();
 
-        public AudioPlayerViewModel(IAudioManager audioManager, IDispatcherTimer timer, IMusicService musicService)
+        public AudioPlayerViewModel(IAudioManager audioManager, IDispatcherTimer timer, IMusicService musicService, IMessenger messenger)
         {
             this.audioManager = audioManager;
             this.musicService = musicService;
-
+            this.messenger = messenger;
             this.timer = timer;
 
             timer.Interval = TimeSpan.FromMilliseconds(10);
-            timer.Tick += (s, e) => OnPropertyChanged(nameof(SongProgress));
+            timer.Tick += (s, e) =>
+            {
+                isPositionChangeSystemDriven = true;
+                OnPropertyChanged(nameof(SongProgress));
+                isPositionChangeSystemDriven = false;
+            };
             timer.Start();
         }
 
@@ -47,6 +54,8 @@ namespace Mde.PlatformIntegration.ViewModels
             }
         }
 
+        bool isPositionChangeSystemDriven;
+
         public double SongProgress
         {
             get {
@@ -55,6 +64,23 @@ namespace Mde.PlatformIntegration.ViewModels
                     return audioPlayer.CurrentPosition / audioPlayer.Duration;
                 }
                 return 0;
+            }
+            set
+            {
+                if (audioPlayer != null && 
+                    audioPlayer.CanSeek &&
+                    !isPositionChangeSystemDriven)
+                {
+                    bool wasPlaying = IsPlaying;
+                    audioPlayer.Seek(audioPlayer.Duration * value);
+
+                    if (wasPlaying)
+                    {
+                        //continue playing after seek
+                        audioPlayer.PlayAsync(cancellationTokenSource.Token);
+                    }
+                    OnPropertyChanged(nameof(IsPlaying)); //song could be ended
+                }
             }
         }
 
@@ -78,11 +104,17 @@ namespace Mde.PlatformIntegration.ViewModels
             }
         }
 
+        public bool IsPlaying => audioPlayer?.IsPlaying == true;
 
         public ICommand AppearingCommand => new Command(() =>
         {
             var gameTracks = musicService.GetGameMusic();
             Music = new ObservableCollection<GameTrack>(gameTracks);
+        });
+
+        public ICommand DisappearingCommand => new Command(() =>
+        {
+            CancelPlaybackCommand.Execute(null);
         });
 
         public ICommand CancelPlaybackCommand => new Command(() =>
@@ -104,6 +136,8 @@ namespace Mde.PlatformIntegration.ViewModels
 
                 OnPropertyChanged(nameof(Volume));
                 OnPropertyChanged(nameof(Speed));
+
+                messenger.Send(new AudioIsPlayingMessage());
 
                 await audioPlayer.PlayAsync(cancellationTokenSource.Token);
             }

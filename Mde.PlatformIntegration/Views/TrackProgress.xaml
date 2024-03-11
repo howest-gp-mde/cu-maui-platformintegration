@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             HeightRequest="20" 
              x:Class="Mde.PlatformIntegration.Views.TrackProgress">
-    <Border Margin="5" StrokeShape="RoundRectangle 10" HeightRequest="20" 
-            BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-            Stroke="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}" Padding="0">
-        <AbsoluteLayout>
-            <Border x:Name="progressBar"
+    <ContentView.GestureRecognizers>
+        <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+    </ContentView.GestureRecognizers>
+    <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
+        <Border StrokeShape="RoundRectangle 10" 
+        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+        Stroke="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}" Padding="0">
+            <AbsoluteLayout Margin="0">
+                <Border x:Name="progressBar" 
                 StrokeThickness="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
                 AbsoluteLayout.LayoutFlags="All"
                 AbsoluteLayout.LayoutBounds="0, 0, 0.25, 1">
-            </Border>
-        </AbsoluteLayout>
-    </Border>   
+                </Border>
+            </AbsoluteLayout>
+        </Border>
+    </Grid>
+    
 </ContentView>

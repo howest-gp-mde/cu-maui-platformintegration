@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm.Messaging;
 using Mde.PlatformIntegration.Domain.Services;
 using Mde.PlatformIntegration.Pages;
 using Mde.PlatformIntegration.Platforms.Services;
@@ -25,6 +26,7 @@ namespace Mde.PlatformIntegration
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("PixelifySans-Regular.ttf", "PixelifySans");
                     fonts.AddFontAwesomeIconFonts();
                 });
 
@@ -33,11 +35,13 @@ namespace Mde.PlatformIntegration
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<LoginViewModel>();
-            builder.Services.AddTransient<AudioPlayerPage>();
-            builder.Services.AddTransient<AudioPlayerViewModel>();
+            //builder.Services.AddTransient<AudioPlayerPage>();
+            //builder.Services.AddTransient<AudioPlayerViewModel>();
+            builder.Services.AddTransientWithShellRoute<AudioPlayerPage, AudioPlayerViewModel>("audioplayer");
 
             //register domain services
             builder.Services.AddTransient<IMusicService, BundledMusicService>();
+            builder.Services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
             builder.Services.AddTransient<IDispatcherTimer>((services) => Application.Current.Dispatcher.CreateTimer());
 
             //register platform specific services
@@ -46,7 +50,7 @@ namespace Mde.PlatformIntegration
 
             //register shell routes
             Routing.RegisterRoute("login", typeof(LoginPage));
-            Routing.RegisterRoute("audioplayer", typeof(AudioPlayerPage));
+            //Routing.RegisterRoute("audioplayer", typeof(AudioPlayerPage));
 
 #if DEBUG
             builder.Logging.AddDebug();

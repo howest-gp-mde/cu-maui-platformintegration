@@ -36,29 +36,6 @@
                 </Grid>
             </material:ButtonView>
 
-
-            <FlexLayout Direction="Column" JustifyContent="Start">
-
-
-
-
-                <!--<material:ButtonView HeightRequest="100" StrokeShape="Rectangle" BackgroundColor="{StaticResource White}">
-            <Grid ColumnDefinitions="60, *, 60">
-                <Label Grid.Column="0" FontFamily="FASolid" Text="{x:Static fa:Solid.User}" FontSize="30" VerticalOptions="Center" TextColor="{StaticResource Gray600}" />
-                <Label Grid.Column="1" VerticalOptions="Center" Text="Login" />
-                <Label Grid.Column="2" FontFamily="FASolid" Text="{x:Static fa:Solid.ChevronRight}" FontSize="30" VerticalOptions="Center" TextColor="{StaticResource Gray400}" />
-            </Grid>
-        </material:ButtonView>
-
-        <material:ButtonView HeightRequest="100" StrokeShape="Rectangle" BackgroundColor="{StaticResource White}">
-            <Grid ColumnDefinitions="60, *, 60">
-                <Label Grid.Column="0" FontFamily="FASolid" Text="{x:Static fa:Solid.User}" FontSize="30" VerticalOptions="Center" TextColor="{StaticResource Gray600}" />
-                <Label Grid.Column="1" VerticalOptions="Center" Text="Login" />
-                <Label Grid.Column="2" FontFamily="FASolid" Text="{x:Static fa:Solid.ChevronRight}" FontSize="30" VerticalOptions="Center" TextColor="{StaticResource Gray400}" />
-            </Grid>
-        </material:ButtonView>-->
-            </FlexLayout>
-
         </VerticalStackLayout>
     </VerticalStackLayout>
     
