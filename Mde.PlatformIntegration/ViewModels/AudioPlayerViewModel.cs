@@ -71,15 +71,7 @@ namespace Mde.PlatformIntegration.ViewModels
                     audioPlayer.CanSeek &&
                     !isPositionChangeSystemDriven)
                 {
-                    bool wasPlaying = IsPlaying;
                     audioPlayer.Seek(audioPlayer.Duration * value);
-
-                    if (wasPlaying)
-                    {
-                        //continue playing after seek
-                        audioPlayer.PlayAsync(cancellationTokenSource.Token);
-                    }
-                    OnPropertyChanged(nameof(IsPlaying)); //song could be ended
                 }
             }
         }
@@ -121,6 +113,16 @@ namespace Mde.PlatformIntegration.ViewModels
         {
             if (audioPlayer?.IsPlaying == true)
                 audioPlayer.Stop();
+
+            OnPropertyChanged(nameof(IsPlaying));
+        });
+
+        public ICommand RepeatPlaybackCommand => new Command(async () =>
+        {
+            if (audioPlayer?.Duration > 0)
+                await audioPlayer.PlayAsync(cancellationTokenSource.Token);
+
+            OnPropertyChanged(nameof(IsPlaying));
         });
 
         public ICommand PlayAudioAssetCommand => new Command<GameTrack>(async (song) =>
@@ -139,8 +141,11 @@ namespace Mde.PlatformIntegration.ViewModels
 
                 messenger.Send(new AudioIsPlayingMessage());
 
-                await audioPlayer.PlayAsync(cancellationTokenSource.Token);
+                _ = audioPlayer.PlayAsync(cancellationTokenSource.Token);
+
+                OnPropertyChanged(nameof(IsPlaying));
             }
+
         });
     }
 }
