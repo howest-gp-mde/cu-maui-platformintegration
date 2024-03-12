@@ -36,6 +36,14 @@
                 </Grid>
             </material:ButtonView>
 
+            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding GoToAudioRecorderCommand}">
+                <Grid ColumnDefinitions="60, *, 60">
+                    <Label Grid.Column="0" Text="{x:Static fa:Solid.Microphone}" StyleClass="Icon" HorizontalOptions="Start" />
+                    <Label Grid.Column="1" Text="Record audio" VerticalOptions="Center" FontSize="20" StyleClass="Text" />
+                    <Label Grid.Column="2" Text="{x:Static fa:Solid.ChevronRight}" StyleClass="Icon" />
+                </Grid>
+            </material:ButtonView>
+            
         </VerticalStackLayout>
     </VerticalStackLayout>
     

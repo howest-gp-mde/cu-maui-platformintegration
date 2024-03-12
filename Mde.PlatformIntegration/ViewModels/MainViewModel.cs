@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Mde.PlatformIntegration.Domain.Services;
-using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific.AppCompat;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -39,6 +38,10 @@ namespace Mde.PlatformIntegration.ViewModels
         public ICommand GoToAudioPlayerCommand => new Command(async () =>
         {
             await Shell.Current.GoToAsync("audioplayer", true);
+        });
+        public ICommand GoToAudioRecorderCommand => new Command(async () =>
+        {
+            await Shell.Current.GoToAsync("audiorecorder", true);
         });
     }
 

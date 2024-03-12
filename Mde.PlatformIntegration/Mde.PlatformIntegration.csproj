@@ -58,6 +58,7 @@
 	  <None Remove="Resources\Images\lemmings.png" />
 	  <None Remove="Resources\Images\shadowofthebeast.png" />
 	  <None Remove="Resources\Images\thesecretofmonkeyisland.png" />
+	  <None Remove="Resources\Raw\recording.json" />
 	  <None Remove="Resources\Raw\shadowofthebeast.mp3" />
 	  <None Remove="Resources\Raw\thesecretofmonkeyisland.mp3" />
 	</ItemGroup>
@@ -69,6 +70,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Plugin.Maui.Audio" Version="2.1.0" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.92" />
 		<PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.8.0" />
 		<PackageReference Include="UraniumUI.Material" Version="2.8.0" />
 	</ItemGroup>
@@ -84,6 +86,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\MainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\RecordAudioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\CustomStyles.xaml">

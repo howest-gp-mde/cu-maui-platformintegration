@@ -6,6 +6,7 @@ using Mde.PlatformIntegration.Platforms.Services;
 using Mde.PlatformIntegration.ViewModels;
 using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using UraniumUI;
 
 
@@ -19,9 +20,12 @@ namespace Mde.PlatformIntegration
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
-                .UseUraniumUI()
-                .UseUraniumUIMaterial()
+                .UseMauiCommunityToolkit()  //register toolkit services
+                .UseSkiaSharp()             //register skia handlers
+
+                .UseUraniumUI()             //register custom UI framework
+                .UseUraniumUIMaterial()     //register custom UI framework material theme
+
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -30,14 +34,11 @@ namespace Mde.PlatformIntegration
                     fonts.AddFontAwesomeIconFonts();
                 });
 
-            //register views and viewmodels
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddTransient<MainViewModel>();
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<LoginViewModel>();
-            //builder.Services.AddTransient<AudioPlayerPage>();
-            //builder.Services.AddTransient<AudioPlayerViewModel>();
+            //register views, viewmodels and routes
+            builder.Services.AddTransientWithShellRoute<MainPage, MainViewModel>("main");
+            builder.Services.AddTransientWithShellRoute<LoginPage, LoginViewModel>("login");
             builder.Services.AddTransientWithShellRoute<AudioPlayerPage, AudioPlayerViewModel>("audioplayer");
+            builder.Services.AddTransientWithShellRoute<RecordAudioPage, RecordAudioViewModel>("audiorecorder");
 
             //register domain services
             builder.Services.AddTransient<IMusicService, BundledMusicService>();
@@ -48,9 +49,6 @@ namespace Mde.PlatformIntegration
             builder.Services.AddSingleton<INativeAuthentication, NativeAuthentication>();
             builder.Services.AddSingleton<IAudioManager>(new AudioManager());
 
-            //register shell routes
-            Routing.RegisterRoute("login", typeof(LoginPage));
-            //Routing.RegisterRoute("audioplayer", typeof(AudioPlayerPage));
 
 #if DEBUG
             builder.Logging.AddDebug();

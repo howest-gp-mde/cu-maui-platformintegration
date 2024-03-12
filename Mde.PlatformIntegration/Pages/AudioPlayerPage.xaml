@@ -64,7 +64,7 @@
 
                         <views:TrackProgress 
                             Grid.Column="1" Grid.Row="0" Margin="10,0,10,0" VerticalOptions="Start"
-                                             Progress="{Binding SongProgress, Mode=TwoWay}" />
+                            Progress="{Binding SongProgress, Mode=TwoWay}" />
 
                         <Grid Grid.Column="1" Grid.Row="1" 
                               Margin="10,0,10,0" VerticalOptions="Start"
@@ -87,8 +87,8 @@
                                    TextColor="{StaticResource Primary}"
                                    Text="{x:Static fa:Solid.VolumeHigh}" FontFamily="FASolid" FontSize="12" />
                             <views:TrackProgress
-                                Grid.Column="3" Grid.Row="0" HeightRequest="12" Margin="10,10,0,0" VerticalOptions="Start"
-                                Progress="{Binding Volume, Mode=TwoWay}" />
+                                   Grid.Column="3" Grid.Row="0" HeightRequest="12" Margin="10,10,0,0" VerticalOptions="Start"
+                                   Progress="{Binding Volume, Mode=TwoWay}" />
                         </Grid>
                     </Grid>
                 </Border>

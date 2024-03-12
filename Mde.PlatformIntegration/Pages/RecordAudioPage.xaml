@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:converters="clr-namespace:Mde.PlatformIntegration.Converters"
+             xmlns:viewmodels="clr-namespace:Mde.PlatformIntegration.ViewModels"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             x:Class="Mde.PlatformIntegration.Pages.RecordAudioPage"
+             x:DataType="viewmodels:RecordAudioViewModel"
+             Title="Record Audio">
+
+    <ContentPage.Resources>
+        <converters:MillisecondsToStringConverter x:Key="MillisecondsToStringConverter" />
+    </ContentPage.Resources>
+
+    <FlexLayout Direction="Column" JustifyContent="SpaceEvenly" AlignItems="Center">
+
+        <Label Text="Hold the microphone button to record" 
+               HorizontalTextAlignment="Center" HorizontalOptions="Center"
+               FontSize="16" Margin="100,0" />
+
+        <Grid RowDefinitions="*, 40">
+
+            <skia:SKLottieView x:Name="recordingAnimation"
+                        IsAnimationEnabled="{Binding IsRecording}"
+                        RepeatCount="-1"
+                        Source="recording.json"
+                        SemanticProperties.Description="Recording animation"
+                        HeightRequest="220"
+                        WidthRequest="220"
+                        HorizontalOptions="Center" />
+
+            <Button WidthRequest="100" HeightRequest="100" Background="Transparent"
+                        Pressed="RecordButtonPressed" Released="RecordButtonReleased" CornerRadius="50" />
+
+            <Label Text="{x:Static fa:Solid.Microphone}" FontFamily="FASolid" FontSize="40"
+                   TextColor="{AppThemeBinding Dark={StaticResource PrimaryDarkText}, Light={StaticResource White}}"
+                   HorizontalTextAlignment="Center" VerticalOptions="Center" />
+
+            <Label Grid.Row="1"
+                   x:Name="recordingTimeLabel"
+                   Opacity="0"
+                   HorizontalTextAlignment="Center"
+                   FontSize="30" 
+                   Text="{Binding RecordTime, Converter={StaticResource MillisecondsToStringConverter}}" />
+        </Grid>
+
+        <HorizontalStackLayout Spacing="10">
+            <Button Text="{x:Static fa:Solid.Play}" FontFamily="FASolid" FontSize="20"
+                    WidthRequest="60" HeightRequest="60" CornerRadius="30" Padding="0"
+                    Command="{Binding PlayCommand}" />
+
+            <Button Text="{x:Static fa:Solid.Stop}" FontFamily="FASolid" FontSize="20"
+                    WidthRequest="60" HeightRequest="60" CornerRadius="30" Padding="0"
+                    Command="{Binding StopPlayingCommand}" />
+
+        </HorizontalStackLayout>
+
+    </FlexLayout>
+
+
+</ContentPage>
