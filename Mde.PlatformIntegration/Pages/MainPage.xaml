@@ -7,23 +7,15 @@
              x:Class="Mde.PlatformIntegration.Pages.MainPage" 
              x:DataType="viewmodels:MainViewModel"
              Title="Platform integration Demo">
-    <VerticalStackLayout>
+    <ScrollView>
         <VerticalStackLayout 
             VerticalOptions="Start"
             BackgroundColor="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource OnBackgroundDark}}">
 
-            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding LoginCommand}">
+            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding GoToProfileCommand}">
                 <Grid ColumnDefinitions="60, *, 60">
-                    <Label Grid.Column="0" Text="{x:Static fa:Solid.Key}" StyleClass="Icon" HorizontalOptions="Start" />
-                    <Label Grid.Column="1" Text="Login" VerticalOptions="Center" FontSize="20" StyleClass="Text" />
-                    <Label Grid.Column="2" Text="{x:Static fa:Solid.ChevronRight}" StyleClass="Icon" />
-                </Grid>
-            </material:ButtonView>
-
-            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding LoginCommand}">
-                <Grid ColumnDefinitions="60, *, 60">
-                    <Label Grid.Column="0" Text="{x:Static fa:Solid.Lightbulb}" StyleClass="Icon" HorizontalOptions="Start" />
-                    <Label Grid.Column="1" VerticalOptions="Center" Text="Flashlight" FontSize="20" StyleClass="Text" />
+                    <Label Grid.Column="0" Text="{x:Static fa:Solid.User}" StyleClass="Icon" HorizontalOptions="Start" />
+                    <Label Grid.Column="1" VerticalOptions="Center" Text="Manage your profile" FontSize="20" StyleClass="Text" />
                     <Label Grid.Column="2" Text="{x:Static fa:Solid.ChevronRight}" StyleClass="Icon" />
                 </Grid>
             </material:ButtonView>
@@ -45,6 +37,6 @@
             </material:ButtonView>
             
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
     
 </ContentPage>

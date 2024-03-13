@@ -4,7 +4,7 @@
     {
         bool IsSupported();
 
-        Task<AuthenticationResult> PromptLoginAsync();
+        Task<AuthenticationResult> PromptLoginAsync(string prompt);
     }
 
     public class AuthenticationResult

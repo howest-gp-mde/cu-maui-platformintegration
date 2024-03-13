@@ -18,5 +18,4 @@ namespace Mde.PlatformIntegration.ViewModels
             
         });
     }
-
 }

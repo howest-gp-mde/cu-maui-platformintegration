@@ -10,9 +10,9 @@ namespace Mde.PlatformIntegration.Platforms.Services
             throw new NotImplementedException();
         }
 
-        public async Task<AuthenticationResult> PromptLoginAsync()
+        public async Task<AuthenticationResult> PromptLoginAsync(string prompt)
         {
-            var result = await UserConsentVerifier.RequestVerificationAsync("Please verify your identity");
+            var result = await UserConsentVerifier.RequestVerificationAsync(prompt);
             if(result == UserConsentVerificationResult.Verified)
             {
                 return new AuthenticationResult

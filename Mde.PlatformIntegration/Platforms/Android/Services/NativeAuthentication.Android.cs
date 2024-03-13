@@ -41,7 +41,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
             return result == 0;
         }
 
-        public async Task<AuthenticationResult> PromptLoginAsync()
+        public async Task<AuthenticationResult> PromptLoginAsync(string prompt)
         {
             var taskCancellationSource = new CancellationTokenSource();
             var taskCompletionSource = new TaskCompletionSource<AuthenticationResult>();
@@ -52,9 +52,9 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
 
             var builder = new BiometricPrompt.PromptInfo.Builder()
-                .SetTitle("Secret stuff")
+                .SetTitle("Verify it's you")
                 .SetConfirmationRequired(true)
-                .SetDescription("Access to your secrets requires authentication");
+                .SetDescription(prompt);
 
             builder = builder.SetNegativeButtonText("Cancel");
 
@@ -63,8 +63,6 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
             var activity = (FragmentActivity) Platform.CurrentActivity;
             using var dialog = new BiometricPrompt(activity, executor, handler);
-
-            //dialog.Authenticate(info);
 
             await using (var taskCancellation = taskCancellationSource.Token.Register(dialog.CancelAuthentication))
             {

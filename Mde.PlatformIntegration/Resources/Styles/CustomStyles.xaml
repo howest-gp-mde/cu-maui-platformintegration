@@ -31,4 +31,20 @@
         <Setter Property="HorizontalTextAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="FormField" TargetType="View">
+        <Setter Property="Margin" Value="10,5" />
+        <Setter Property="MinimumHeightRequest" Value="50" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+    
+    <Style Class="FormLabel" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style Class="RightAlign" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+    </Style>
+
 </ResourceDictionary>

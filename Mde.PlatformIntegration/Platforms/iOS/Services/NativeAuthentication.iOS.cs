@@ -15,7 +15,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
             return false;
         }
 
-        public Task<AuthenticationResult> PromptLoginAsync()
+        public Task<AuthenticationResult> PromptLoginAsync(string prompt)
         {
             throw new NotImplementedException();
         }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Mde.PlatformIntegration.ViewModels"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             x:Class="Mde.PlatformIntegration.Pages.ProfilePage"
+             x:DataType="viewmodels:ProfileViewModel"
+             HideSoftInputOnTapped="True"
+             Title="Profile">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Command="{Binding DeleteCommand}"
+            IconImageSource="{FontImage Glyph={x:Static fa:Solid.TrashCan}, FontFamily=FASolid, Size=20}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="5" IsVisible="{Binding IsAuthenticated}">
+
+            <Grid ColumnDefinitions="100, 2*" Margin="0,0,0,50" MaximumWidthRequest="800">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Style="{StaticResource FormField}" StyleClass="FormLabel, RightAlign" Grid.Column="0" Grid.Row="0"
+                       Text="First Name"  />
+                <Entry Style="{StaticResource FormField}" StyleClass="FormField"
+                       Text="{Binding FirstName}"
+                       Grid.Column="1" Grid.Row="0" />
+
+                <Label Style="{StaticResource FormField}" StyleClass="FormLabel, RightAlign" Grid.Column="0" Grid.Row="1"
+                       Text="Last Name"  />
+                <Entry Style="{StaticResource FormField}" StyleClass="FormField"
+                       Text="{Binding LastName}"
+                       Grid.Column="1" Grid.Row="1" />
+
+                <Label Style="{StaticResource FormField}" StyleClass="FormLabel, RightAlign" Grid.Column="0" Grid.Row="2"
+                       Text="E-mail"  />
+                <Entry Style="{StaticResource FormField}" StyleClass="FormField"
+                       Keyboard="Email"
+                       Text="{Binding Email}"
+                       Grid.Column="1" Grid.Row="2" />
+
+                <CheckBox StyleClass="FormField, RightAlign" Grid.Column="0" Grid.Row="3"
+                          HorizontalOptions="End"
+                          IsChecked="{Binding ConsentAnalytics}" />
+                <Label Style="{StaticResource FormField}" StyleClass="FormField, FormLabel"
+                       Grid.Column="1" Grid.Row="3"
+                       Text="I consent to my profile data to be used for analytical purproses" />
+
+                <CheckBox StyleClass="FormField, RightAlign" Grid.Column="0" Grid.Row="4"
+                          HorizontalOptions="End"
+                          IsChecked="{Binding ConsentPersonalized}" />
+                
+                <Label Style="{StaticResource FormField}" StyleClass="FormField, FormLabel"
+                       Grid.Column="1" Grid.Row="4"
+                       Text="I consent to my profile data to be used for personalized offers" />
+
+            </Grid>
+
+            <Button VerticalOptions="Center" WidthRequest="200"
+                    Command="{Binding SaveCommand}"
+                    Text="Save" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>
