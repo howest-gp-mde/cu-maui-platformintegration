@@ -8,18 +8,20 @@ namespace Mde.PlatformIntegration.ViewModels
     {
         private readonly INativeAuthentication localAuthentication;
         private readonly IProfileService profileService;
-        private readonly IToastFactory toastFactory;
+        private readonly IDialogService dialogService;
 
         public const string RetrievalAuthenticationPrompt = "Retrieving your profile data requires authentication";
-        public const string RemovalAuthenticationPrompt = "Confirm your identity to remove your profile data";
-        public const string AuthenticationFailedMessage = "Authentication failed, please try again";
         public const string SaveSuccesfulMessage = "Your profile data was saved securely";
+        public const string RemovalAuthenticationPrompt = "Confirm your identity to remove your profile data";
+        public const string ConfirmDeletionTitle = "Confirm deletion";
+        public const string ConfirmDeletionDescription = "Are you sure you want to delete your profile data?";
+        public const string AuthenticationFailedMessage = "Authentication failed, please try again";
 
-        public ProfileViewModel(INativeAuthentication localAuthentication, IProfileService profileService, IToastFactory toastFactory)
+        public ProfileViewModel(INativeAuthentication localAuthentication, IProfileService profileService, IDialogService dialogService)
         {
             this.localAuthentication = localAuthentication;
             this.profileService = profileService;
-            this.toastFactory = toastFactory;
+            this.dialogService = dialogService;
             SaveCommand = new Command(OnSaveCommand);
             DeleteCommand = new Command(OnDeleteCommand);
             AppearingCommand = new Command(OnAppearing);
@@ -92,7 +94,7 @@ namespace Mde.PlatformIntegration.ViewModels
         private async void OnSaveCommand()
         {
             await profileService.SaveProfileAsync(currentProfile);
-            await toastFactory.CreateToast(SaveSuccesfulMessage).Show();
+            await dialogService.ShowToast(SaveSuccesfulMessage);
             await Refresh();
         }
 
@@ -100,15 +102,25 @@ namespace Mde.PlatformIntegration.ViewModels
 
         private async void OnDeleteCommand()
         {
-            var result = await localAuthentication.PromptLoginAsync(RemovalAuthenticationPrompt);
-            if (result.Authenticated)
+            bool confirmDeletion;
+            if (localAuthentication.IsSupported())
+            {
+                var result = await localAuthentication.PromptLoginAsync(RemovalAuthenticationPrompt);
+                confirmDeletion = result.Authenticated;
+            }
+            else
+            {
+                confirmDeletion = await dialogService.ShowConfirmationAsync(ConfirmDeletionTitle, ConfirmDeletionDescription);
+            }
+            
+            if (confirmDeletion)
             {
                 await profileService.DeleteProfileAsync(currentProfile);
                 await Refresh();
             }
             else
             {
-                await toastFactory.CreateToast(AuthenticationFailedMessage).Show();
+                await dialogService.ShowToast(AuthenticationFailedMessage);
             }
         }
 
@@ -116,16 +128,25 @@ namespace Mde.PlatformIntegration.ViewModels
 
         private async void OnAppearing()
         {
-            var result = await localAuthentication.PromptLoginAsync(RetrievalAuthenticationPrompt);
-            if (result.Authenticated)
+            if(localAuthentication.IsSupported())
             {
-                IsAuthenticated = true; 
+                var result = await localAuthentication.PromptLoginAsync(RetrievalAuthenticationPrompt);
+                IsAuthenticated = result.Authenticated;
+            }
+            else
+            {
+                //auth not supported, assume authenticated
+                IsAuthenticated = true;
+            }
+
+            if (IsAuthenticated)
+            {
                 await Refresh();
             }
             else
             {
                 //go back
-                await toastFactory.CreateToast(AuthenticationFailedMessage).Show();
+                await dialogService.ShowToast(AuthenticationFailedMessage);
                 await Shell.Current.GoToAsync("..");
             }
         }

@@ -7,7 +7,13 @@ namespace Mde.PlatformIntegration.Platforms.Services
     {
         public bool IsSupported()
         {
-            throw new NotImplementedException();
+            //var result = UserConsentVerifier.CheckAvailabilityAsync()
+            //    .AsTask()
+            //    .GetAwaiter()   //run synchronously because interface method as not a Task<>
+            //    .GetResult();
+
+            //return result == UserConsentVerifierAvailability.Available;
+            return false;
         }
 
         public async Task<AuthenticationResult> PromptLoginAsync(string prompt)

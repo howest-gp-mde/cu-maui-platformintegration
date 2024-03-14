@@ -44,7 +44,7 @@ namespace Mde.PlatformIntegration
             //register domain services
             builder.Services.AddTransient<IMusicService, BundledMusicService>();
             builder.Services.AddTransient<IProfileService, SecureProfileService>();
-            builder.Services.AddTransient<IToastFactory, ToastFactory>();
+            builder.Services.AddTransient<IDialogService, DialogService>();
             builder.Services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
             builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
             builder.Services.AddTransient<IDispatcherTimer>((services) => Application.Current.Dispatcher.CreateTimer());
