@@ -91,6 +91,9 @@
 	  <MauiXaml Update="Pages\RecordAudioPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ComposeSmsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\CustomStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -100,6 +103,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\ComposeSMSPage.xaml.cs">
+	    <DependentUpon>ComposeSmsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Platforms\iOS\Services\NativeAuthentication.iOS.cs">
 	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
 	  </Compile>

@@ -20,6 +20,15 @@
                 </Grid>
             </material:ButtonView>
 
+            <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding GoToSmsCommand}" 
+                                 IsVisible="{OnPlatform WinUI=False, Default={Binding Path=IsSmsSupported}}">
+                <Grid ColumnDefinitions="60, *, 60">
+                    <Label Grid.Column="0" Text="{x:Static fa:Solid.Message}" StyleClass="Icon" HorizontalOptions="Start" />
+                    <Label Grid.Column="1" Text="Compose SMS" VerticalOptions="Center" FontSize="20" StyleClass="Text" />
+                    <Label Grid.Column="2" Text="{x:Static fa:Solid.ChevronRight}" StyleClass="Icon" />
+                </Grid>
+            </material:ButtonView>
+
             <material:ButtonView StyleClass="NavigationButton" TappedCommand="{Binding GoToAudioPlayerCommand}">
                 <Grid ColumnDefinitions="60, *, 60">
                     <Label Grid.Column="0" Text="{x:Static fa:Solid.Music}" StyleClass="Icon" HorizontalOptions="Start" />
@@ -35,7 +44,7 @@
                     <Label Grid.Column="2" Text="{x:Static fa:Solid.ChevronRight}" StyleClass="Icon" />
                 </Grid>
             </material:ButtonView>
-            
+
         </VerticalStackLayout>
     </ScrollView>
     

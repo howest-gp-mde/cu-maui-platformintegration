@@ -39,12 +39,14 @@ namespace Mde.PlatformIntegration
             builder.Services.AddTransientWithShellRoute<ProfilePage, ProfileViewModel>("profile");
             builder.Services.AddTransientWithShellRoute<AudioPlayerPage, AudioPlayerViewModel>("audioplayer");
             builder.Services.AddTransientWithShellRoute<RecordAudioPage, RecordAudioViewModel>("audiorecorder");
+            builder.Services.AddTransientWithShellRoute<ComposeSmsPage, ComposeSmsViewModel>("sms");
 
             //register domain services
             builder.Services.AddTransient<IMusicService, BundledMusicService>();
             builder.Services.AddTransient<IProfileService, SecureProfileService>();
             builder.Services.AddTransient<IDialogService, DialogService>();
             builder.Services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+            builder.Services.AddSingleton<ISms>(Sms.Default);
             builder.Services.AddSingleton<ISecureStorage>(SecureStorage.Default);
             builder.Services.AddTransient<IDispatcherTimer>((services) => Application.Current.Dispatcher.CreateTimer());
 

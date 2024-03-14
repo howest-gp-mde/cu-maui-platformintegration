@@ -7,6 +7,15 @@ namespace Mde.PlatformIntegration.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
+        private readonly ISms smsService;
+
+        public MainViewModel(ISms smsService)
+        {
+            this.smsService = smsService;
+        }
+
+        public bool IsSmsSupported => smsService.IsComposeSupported;
+
         public ICommand GoToProfileCommand => new Command(async () =>
         {
             await Shell.Current.GoToAsync("profile", true);
@@ -18,6 +27,10 @@ namespace Mde.PlatformIntegration.ViewModels
         public ICommand GoToAudioRecorderCommand => new Command(async () =>
         {
             await Shell.Current.GoToAsync("audiorecorder", true);
+        });
+        public ICommand GoToSmsCommand => new Command(async () =>
+        {
+            await Shell.Current.GoToAsync("sms", true);
         });
     }
 

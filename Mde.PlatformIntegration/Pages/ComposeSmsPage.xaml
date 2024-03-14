@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Mde.PlatformIntegration.ViewModels"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="viewmodels:ComposeSmsViewModel"
+             x:Class="Mde.PlatformIntegration.Pages.ComposeSmsPage"
+             Title="Compose SMS">
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="5">
+
+            <Grid ColumnDefinitions="100, 2*" Margin="0,0,0,50" MaximumWidthRequest="800">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Style="{StaticResource FormField}" StyleClass="FormLabel, RightAlign" Grid.Column="0" Grid.Row="0"
+                       Text="Recipient"  />
+                <Entry Style="{StaticResource FormField}" StyleClass="FormField"
+                       Text="{Binding Recipient}" Keyboard="Telephone"
+                       Grid.Column="1" Grid.Row="0" />
+
+                <Label Style="{StaticResource FormField}" StyleClass="FormLabel, RightAlign" Grid.Column="0" Grid.Row="1"
+                       Text="Message"  />
+                <Entry Style="{StaticResource FormField}" StyleClass="FormField"
+                       android:Entry.ImeOptions="Send"
+                       Text="{Binding Body}" 
+                       Grid.Column="1" Grid.Row="1" />
+            </Grid>
+
+            <Button VerticalOptions="Center" WidthRequest="200"
+                Command="{Binding SendCommand}"
+                Text="Save" />
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage>
