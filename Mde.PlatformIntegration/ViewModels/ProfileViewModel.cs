@@ -13,6 +13,7 @@ namespace Mde.PlatformIntegration.ViewModels
         public const string RetrievalAuthenticationPrompt = "Retrieving your profile data requires authentication";
         public const string SaveSuccesfulMessage = "Your profile data was saved securely";
         public const string RemovalAuthenticationPrompt = "Confirm your identity to remove your profile data";
+        public const string DeletionSuccessful = "Your profile data has been removed";
         public const string ConfirmDeletionTitle = "Confirm deletion";
         public const string ConfirmDeletionDescription = "Are you sure you want to delete your profile data?";
         public const string AuthenticationFailedMessage = "Authentication failed, please try again";
@@ -27,7 +28,6 @@ namespace Mde.PlatformIntegration.ViewModels
             AppearingCommand = new Command(OnAppearing);
 
             currentProfile = new Profile();
-
         }
 
         private Profile currentProfile;
@@ -110,12 +110,14 @@ namespace Mde.PlatformIntegration.ViewModels
             }
             else
             {
+                //fallback for unsupported devices 
                 confirmDeletion = await dialogService.ShowConfirmationAsync(ConfirmDeletionTitle, ConfirmDeletionDescription);
             }
             
             if (confirmDeletion)
             {
                 await profileService.DeleteProfileAsync(currentProfile);
+                await dialogService.ShowToast(DeletionSuccessful);
                 await Refresh();
             }
             else

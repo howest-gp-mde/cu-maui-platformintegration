@@ -7,16 +7,16 @@
 >
 
     <Style TargetType="material:ButtonView" Class="NavigationButton">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource OnSurface}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
         <Setter Property="StrokeShape" Value="Rectangle" />
         <Setter Property="HeightRequest" Value="100" />
     </Style>
 
-    <Style TargetType="material:ButtonView" Class="MusicButton">
+    <Style x:Key="MusicButton" TargetType="material:ButtonView" Class="MusicButton">
         <Setter Property="WidthRequest" Value="105" />
         <Setter Property="HeightRequest" Value="130" />
         <Setter Property="Margin" Value="5,10" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SurfaceDark}}" />
     </Style>
 
     <Style x:Key="NormalText" TargetType="Label" Class="Text">

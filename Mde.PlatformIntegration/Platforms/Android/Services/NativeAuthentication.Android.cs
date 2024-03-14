@@ -28,7 +28,8 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
         public bool IsSupported()
         {
-            if (Build.VERSION.SdkInt < BuildVersionCodes.M)
+            //check if android version is at least 28
+            if (Build.VERSION.SdkInt < BuildVersionCodes.P)
                 return false;
 
             var context = Application.Context;

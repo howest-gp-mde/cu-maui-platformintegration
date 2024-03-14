@@ -13,17 +13,6 @@ public partial class RecordAudioPage : ContentPage
 		BindingContext = viewModel;
         this.recordAudioViewModel = viewModel;
     }
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        recordAudioViewModel.AppearingCommand.Execute(null);
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        recordAudioViewModel.DisappearingCommand.Execute(null);
-    }
 
     private void RecordButtonPressed(object sender, EventArgs e)
     {

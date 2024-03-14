@@ -36,7 +36,6 @@ namespace Mde.PlatformIntegration
 
             //register views, viewmodels and routes
             builder.Services.AddTransientWithShellRoute<MainPage, MainViewModel>("main");
-            builder.Services.AddTransientWithShellRoute<LoginPage, LoginViewModel>("login");
             builder.Services.AddTransientWithShellRoute<ProfilePage, ProfileViewModel>("profile");
             builder.Services.AddTransientWithShellRoute<AudioPlayerPage, AudioPlayerViewModel>("audioplayer");
             builder.Services.AddTransientWithShellRoute<RecordAudioPage, RecordAudioViewModel>("audiorecorder");

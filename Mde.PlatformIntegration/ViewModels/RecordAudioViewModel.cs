@@ -131,15 +131,5 @@ namespace Mde.PlatformIntegration.ViewModels
             StopPlayingCommand.ChangeCanExecute();
         }
         
-
-        public Command AppearingCommand => new Command(() =>
-        {
-
-        });
-
-        public Command DisappearingCommand => new Command(() =>
-        {
-
-        });
     }
 }

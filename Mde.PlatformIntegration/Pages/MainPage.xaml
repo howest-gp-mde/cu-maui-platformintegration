@@ -6,7 +6,7 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              x:Class="Mde.PlatformIntegration.Pages.MainPage" 
              x:DataType="viewmodels:MainViewModel"
-             Title="Platform integration Demo">
+             Title="Platform Integration Demo">
     <ScrollView>
         <VerticalStackLayout 
             VerticalOptions="Start"
