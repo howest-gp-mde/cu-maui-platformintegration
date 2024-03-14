@@ -14,6 +14,12 @@ public partial class RecordAudioPage : ContentPage
         this.recordAudioViewModel = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+    }
+
     private void RecordButtonPressed(object sender, EventArgs e)
     {
         recordingAnimation.Progress = TimeSpan.Zero;
@@ -25,6 +31,6 @@ public partial class RecordAudioPage : ContentPage
     {
         recordingAnimation.Progress = TimeSpan.Zero;
         recordingTimeLabel.FadeTo(0, 100);
-        recordAudioViewModel.StopRecordingCommand.Execute(null);
+        recordAudioViewModel.StopRecordingCommand.Execute(null);        
     }
 }

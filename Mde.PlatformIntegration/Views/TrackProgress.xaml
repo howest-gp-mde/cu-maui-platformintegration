@@ -8,14 +8,14 @@
     </ContentView.GestureRecognizers>
     <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
         <Border StrokeShape="RoundRectangle 10" 
-        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
-        Stroke="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}" Padding="0">
+                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}"
+                Stroke="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource PrimaryDark}}" Padding="0">
             <AbsoluteLayout Margin="0">
                 <Border x:Name="progressBar" 
-                StrokeThickness="0"
-                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
-                AbsoluteLayout.LayoutFlags="All"
-                AbsoluteLayout.LayoutBounds="0, 0, 0.25, 1">
+                        StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}"
+                        AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0, 0, 0.25, 1">
                 </Border>
             </AbsoluteLayout>
         </Border>

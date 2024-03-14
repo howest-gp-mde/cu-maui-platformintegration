@@ -64,29 +64,4 @@ public partial class TrackProgress : ContentView
                 break;
         }
     }
-
-    private void PointerGestureRecognizer_PointerPressed(object sender, PointerEventArgs e)
-    {
-        if (sender is View tappedView)
-        {
-            Debug.WriteLine($"Pointer Pressed: {e.GetPosition(tappedView)}");
-        }   
-    }
-
-    private void PointerGestureRecognizer_PointerMoved(object sender, PointerEventArgs e)
-    {
-        if (sender is View tappedView)
-        {
-            Debug.WriteLine($"Pointer Moved: {e.GetPosition(tappedView)}");
-        }
-    }
-
-    private void PointerGestureRecognizer_PointerReleased(object sender, PointerEventArgs e)
-    {
-
-        if (sender is View tappedView)
-        {
-            Debug.WriteLine($"Pointer Released: {e.GetPosition(tappedView)}");
-        }
-    }
 }

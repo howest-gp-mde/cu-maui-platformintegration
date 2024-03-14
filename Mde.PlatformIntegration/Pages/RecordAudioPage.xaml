@@ -30,7 +30,7 @@
                         WidthRequest="220"
                         HorizontalOptions="Center" />
 
-            <Button WidthRequest="100" HeightRequest="100" Background="Transparent"
+            <Button ZIndex="100" WidthRequest="100" HeightRequest="100" Background="Transparent"
                         Pressed="RecordButtonPressed" Released="RecordButtonReleased" CornerRadius="50" />
 
             <Label Text="{x:Static fa:Solid.Microphone}" FontFamily="FASolid" FontSize="40"
