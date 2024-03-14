@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
 >
-
+    
     <Style TargetType="material:ButtonView" Class="NavigationButton">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource SurfaceDark}}" />
         <Setter Property="StrokeShape" Value="Rectangle" />

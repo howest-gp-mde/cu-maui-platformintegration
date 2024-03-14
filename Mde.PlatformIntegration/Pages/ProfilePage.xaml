@@ -15,18 +15,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="12" Spacing="5" IsVisible="{Binding IsAuthenticated}">
 
-            <Label Margin="0,0,0,20" HorizontalTextAlignment="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Demonstrates the use of " />
-                        <Span Text="INativeAuthentication" FontAttributes="Bold" />
-                        <Span Text=", which implements platform-specific fingerprint authentication for " />
-                        <Span Text="Android" FontAttributes="Bold" /><Span Text=", " />
-                        <Span Text="Windows" FontAttributes="Bold" /><Span Text=" and " />
-                        <Span Text="iOS" FontAttributes="Bold" /><Span Text="." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <Label Style="{x:StaticResource ProfileFingerprintDescription}" />
+            
 
             <Grid ColumnDefinitions="100, 2*" Margin="0,0,0,50" MaximumWidthRequest="800">
                 <Grid.RowDefinitions>

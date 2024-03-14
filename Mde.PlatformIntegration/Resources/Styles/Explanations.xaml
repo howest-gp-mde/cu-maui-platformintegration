@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style x:Key="DescriptionLabel" TargetType="Label">
+        <Setter Property="Margin" Value="10,20,10,20" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="RecordAudioDescription" TargetType="Label" BasedOn="{x:StaticResource DescriptionLabel}">
+        <Setter Property="FormattedText">
+            <Setter.Value>
+                <FormattedString>
+                    <Span Text="Demonstrates the " />
+                    <Span Text="Plugin.Maui.Audio" FontAttributes="Bold" />
+                    <Span Text=" plugin for recording, and " />
+                    <Span Text="SKLottieView" FontAttributes="Bold" />
+                    <Span Text=" for the Lottie animation" />
+                </FormattedString>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ComposeSmsDescription" TargetType="Label" BasedOn="{x:StaticResource DescriptionLabel}">
+        <Setter Property="FormattedText">
+            <Setter.Value>
+                <FormattedString>
+                    <Span Text="Demonstrates the " />
+                    <Span Text="Sms" FontAttributes="Bold" />
+                    <Span Text=" cross-platform API from MAUI." />
+                </FormattedString>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ProfileFingerprintDescription" TargetType="Label" BasedOn="{x:StaticResource DescriptionLabel}">
+        <Setter Property="FormattedText">
+            <Setter.Value>
+                <FormattedString>
+                    <Span Text="Demonstrates the use of " />
+                    <Span Text="INativeAuthentication" FontAttributes="Bold" />
+                    <Span Text=", which implements platform-specific fingerprint authentication for " />
+                    <Span Text="Android" FontAttributes="Bold" />
+                    <Span Text=", " />
+                    <Span Text="Windows" FontAttributes="Bold" />
+                    <Span Text=" and " />
+                    <Span Text="iOS" FontAttributes="Bold" />
+                    <Span Text="." />
+                </FormattedString>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

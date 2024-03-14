@@ -15,18 +15,7 @@
 
     <Grid RowDefinitions="Auto, *">
 
-        <Label Grid.Row="0" Margin="10,20,10,20" HorizontalTextAlignment="Center">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="Demonstrates the " />
-                    <Span Text="Plugin.Maui.Audio" FontAttributes="Bold" />
-                    <Span Text=" plugin for recording, and " />
-                    <Span Text="SKLottieView" FontAttributes="Bold" />
-                    <Span Text=" for the Lottie animation" />
-                </FormattedString>
-            </Label.FormattedText>
-        </Label>
-
+        <Label Grid.Row="0" Style="{x:StaticResource RecordAudioDescription}" />
 
         <FlexLayout Grid.Row="1" Direction="Column" JustifyContent="SpaceEvenly" AlignItems="Center">
 
