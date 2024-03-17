@@ -59,7 +59,7 @@ namespace Mde.PlatformIntegration.ViewModels
 
         private async void StartRecording()
         {
-            var microphonePermission = await Permissions.CheckStatusAsync<Microphone>();
+            PermissionStatus microphonePermission = await Permissions.CheckStatusAsync<Microphone>();
             if (microphonePermission != PermissionStatus.Granted)
             {
                 microphonePermission = await Permissions.RequestAsync<Microphone>();

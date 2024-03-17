@@ -1,19 +1,13 @@
-﻿using Android.Content;
+﻿using Android;
+using Android.Content;
+using Android.Content.PM;
+using Android.OS;
 using AndroidX.Biometric;
 using AndroidX.Fragment.App;
-using Microsoft.Maui.ApplicationModel;
-using Mde.PlatformIntegration.Domain.Services;
-using Microsoft.Maui.Platform;
-using Application = Android.App.Application;
-using Org.Apache.Http.Client;
-using System.Threading.Tasks;
-using Java.Util.Concurrent;
-using Android.App;
-using System.Threading;
 using Java.Lang;
-using Android.OS;
-using Android;
-using Android.Content.PM;
+using Java.Util.Concurrent;
+using Mde.PlatformIntegration.Domain.Services;
+using Application = Android.App.Application;
 
 namespace Mde.PlatformIntegration.Platforms.Services
 {
@@ -34,10 +28,11 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
             var context = Application.Context;
 
-            if (context.CheckCallingOrSelfPermission(Manifest.Permission.UseBiometric) != Permission.Granted &&
-                context.CheckCallingOrSelfPermission(Manifest.Permission.UseFingerprint) != Permission.Granted)
+            //check if we have the necessary permissions
+            if (context.CheckCallingOrSelfPermission(Manifest.Permission.UseBiometric) != Permission.Granted)
                 return false;
 
+            //check if authentication is supported on this device
             int result = manager.CanAuthenticate(BiometricManager.Authenticators.DeviceCredential | BiometricManager.Authenticators.BiometricWeak);
             return result == 0;
         }
@@ -45,13 +40,15 @@ namespace Mde.PlatformIntegration.Platforms.Services
         public async Task<AuthenticationResult> PromptLoginAsync(string prompt)
         {
             var taskCancellationSource = new CancellationTokenSource();
+            
+            //this object signals completion of the Task, it is used in the AuthenticationHandler
             var taskCompletionSource = new TaskCompletionSource<AuthenticationResult>();
 
+            //initialize manager and handler
             var manager = BiometricManager.From(Application.Context);
-
             var handler = new AuthenticationHandler(taskCompletionSource);
 
-
+            //build the prompt
             var builder = new BiometricPrompt.PromptInfo.Builder()
                 .SetTitle("Verify it's you")
                 .SetConfirmationRequired(true)
@@ -60,11 +57,13 @@ namespace Mde.PlatformIntegration.Platforms.Services
             builder = builder.SetNegativeButtonText("Cancel");
 
             var info = builder.Build();
+
+            //get the native Android activity which hosts our MAUI app
+            var activity = (FragmentActivity)Platform.CurrentActivity;
             var executor = Executors.NewSingleThreadExecutor();
 
-            var activity = (FragmentActivity) Platform.CurrentActivity;
+            //show the prompt
             using var dialog = new BiometricPrompt(activity, executor, handler);
-
             await using (var taskCancellation = taskCancellationSource.Token.Register(dialog.CancelAuthentication))
             {
                 dialog.Authenticate(info);
@@ -99,6 +98,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
                 base.OnAuthenticationFailed();
                 SetResult(false, "Authentication failed. Please try again.");
             }
+            
             public void OnClick(IDialogInterface dialog, int which)
             {
                 SetResult(false, "Authentication cancelled");
@@ -108,6 +108,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
             {
                 if (!(taskCompletionSource.Task.IsCanceled || taskCompletionSource.Task.IsCompleted || taskCompletionSource.Task.IsFaulted))
                 {
+                    //signal completetion of the Task
                     taskCompletionSource.SetResult(new AuthenticationResult
                     {
                         Authenticated = success,

@@ -9,7 +9,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
         {
             var result = UserConsentVerifier.CheckAvailabilityAsync()
                 .AsTask()
-                .GetAwaiter()   //run synchronously because interface method as not a Task<>
+                .GetAwaiter()   //run synchronously because interface method is not a Task<>
                 .GetResult();
 
             return result == UserConsentVerifierAvailability.Available;
@@ -17,6 +17,7 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
         public async Task<AuthenticationResult> PromptLoginAsync(string prompt)
         {
+            
             var result = await UserConsentVerifier.RequestVerificationAsync(prompt);
             if(result == UserConsentVerificationResult.Verified)
             {
