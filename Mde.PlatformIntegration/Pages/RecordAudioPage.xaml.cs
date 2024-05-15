@@ -17,7 +17,7 @@ public partial class RecordAudioPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
+        recordAudioViewModel.AppearingCommand.Execute(null);
     }
 
     private void RecordButtonPressed(object sender, EventArgs e)

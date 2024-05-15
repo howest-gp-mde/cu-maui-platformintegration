@@ -21,6 +21,7 @@ namespace Mde.PlatformIntegration.ViewModels
             this.recordingUpdateTimer.Interval = TimeSpan.FromMilliseconds(1000/20); // 0.02s per update (50 fps)
             this.recordingUpdateTimer.Tick += UpdateRecordingTime;
 
+            AppearingCommand = new Command(Appearing);
             RecordCommand = new Command(StartRecording, () => !IsRecording);
             StopRecordingCommand = new Command(StopRecording, () => IsRecording);
             PlayCommand = new Command(StartPlaying, () => !IsPlaying && HasAudioSource);
@@ -52,32 +53,40 @@ namespace Mde.PlatformIntegration.ViewModels
             get => audioRecorder?.IsRecording ?? false;
         }
 
+        public Command AppearingCommand { get; }
         public Command RecordCommand { get; }
         public Command StopRecordingCommand { get; }
         public Command PlayCommand { get; }
         public Command StopPlayingCommand { get; }
 
+        public async void Appearing()
+        {
+            var microphonePermission = await Permissions.CheckStatusAsync<Microphone>();
+            if (microphonePermission != PermissionStatus.Granted)
+            {
+                await Permissions.RequestAsync<Microphone>();
+            }
+        }
+
         private async void StartRecording()
         {
             PermissionStatus microphonePermission = await Permissions.CheckStatusAsync<Microphone>();
-            if (microphonePermission != PermissionStatus.Granted)
-            {
-                microphonePermission = await Permissions.RequestAsync<Microphone>();
-            }
 
             if (microphonePermission == PermissionStatus.Granted)
             {
                 audioRecorder = audioManager.CreateRecorder();
                 await audioRecorder.StartAsync();
+
+                recordingStopwatch.Restart();
+                recordingUpdateTimer.Start();
+
+                OnPropertyChanged(nameof(IsRecording));
+
+                RecordCommand.ChangeCanExecute();
+                StopRecordingCommand.ChangeCanExecute();
             }
 
-            recordingStopwatch.Restart();
-            recordingUpdateTimer.Start();
-
-            OnPropertyChanged(nameof(IsRecording));
-
-            RecordCommand.ChangeCanExecute();
-            StopRecordingCommand.ChangeCanExecute();
+            
         }
 
         private async void StopRecording()
