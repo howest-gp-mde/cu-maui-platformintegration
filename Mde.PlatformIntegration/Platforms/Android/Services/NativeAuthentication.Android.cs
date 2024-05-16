@@ -28,13 +28,10 @@ namespace Mde.PlatformIntegration.Platforms.Services
 
             var context = Application.Context;
 
-#if ANDROID28_0_OR_GREATER
             //check if we have the necessary permissions
             if (context.CheckCallingOrSelfPermission(Manifest.Permission.UseBiometric) != Permission.Granted)
                 return false;
-#else
-            return false;
-#endif
+
             //check if authentication is supported on this device
             int result = manager.CanAuthenticate(BiometricManager.Authenticators.DeviceCredential | BiometricManager.Authenticators.BiometricWeak);
             return result == 0;
